@@ -72,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
         mNbOfPlayersTextView.setText("" + mNumberOfPlayers);
     }
 
+    /**
+     * Parses the json files for Westeros and Essos maps.
+     */
     private void getMaps() {
         InputStream inputStream = this.getResources().openRawResource(R.raw.westeros_territories);
         String westerosJsonString = readJsonFile(inputStream);
@@ -84,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
         mEssosMap = gson.fromJson(essosJsonString, Map.class);
     }
 
+    /**
+     * Reads json file.
+     *
+     * @param inputStream the input stream
+     * @return the json string
+     */
     private String readJsonFile(InputStream inputStream) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
