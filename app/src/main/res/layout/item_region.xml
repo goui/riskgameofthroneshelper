@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/border"
     android:orientation="vertical"
-    android:padding="4dp">
+    android:padding="1dp">
 
     <TextView
         android:id="@+id/region_name_text_view"
@@ -15,7 +15,7 @@
         android:shadowColor="@android:color/black"
         android:shadowDx="0.0"
         android:shadowDy="0.0"
-        android:shadowRadius="3.0"
+        android:shadowRadius="5.0"
         android:textAllCaps="true"
         android:textColor="@android:color/white"
         tools:background="@color/colorYellow"

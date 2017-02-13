@@ -40,13 +40,10 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private List<ListItem> mItems;
 
-    private Set<Integer> mPickedColors;
-
     public TerritoryAdapter(Context context, List<ListItem> items) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
         mItems = items;
-        mPickedColors = new HashSet<>();
     }
 
     @Override
@@ -65,20 +62,30 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             if (region != null) {
                 RegionViewHolder rvh = (RegionViewHolder) holder;
                 rvh.regionNameTextView.setText(region.getName());
-                rvh.regionNameTextView.setBackgroundColor(getColor(region.getColorIndex()));
+                if (region.getColorIndex() > -1) {
+                    rvh.regionNameTextView.setBackgroundColor(getColor(region.getColorIndex()));
+                } else {
+                    rvh.regionNameTextView.setBackgroundResource(android.R.color.transparent);
+                }
             }
         } else {
             final Territory territory = (Territory) mItems.get(position);
             if (territory != null) {
                 final TerritoryViewHolder tvh = (TerritoryViewHolder) holder;
                 tvh.territoryNameTextView.setText(territory.getName());
-                tvh.territoryNameTextView.setBackgroundColor(getColor(territory.getColorIndex()));
+                if (territory.getColorIndex() > -1) {
+                    tvh.territoryNameTextView.setBackgroundColor(getColor(territory.getColorIndex()));
+                } else {
+                    tvh.territoryNameTextView.setBackgroundResource(android.R.color.transparent);
+                }
                 tvh.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         int oldColorIndex = territory.getColorIndex();
-                        tvh.territoryNameTextView.setBackgroundColor(pickNextColor(territory));
-                        EventBus.getDefault().post(new TerritoryClickEvent(territory, oldColorIndex));
+                        int newColorIndex = pickNextColorIndex(territory);
+                        territory.setColorIndex(newColorIndex);
+                        tvh.territoryNameTextView.setBackgroundColor(getColor(newColorIndex));
+                        EventBus.getDefault().post(new TerritoryClickEvent(territory, oldColorIndex)); // TODO check if region is controlled and compute players troops
                     }
                 });
             }
@@ -89,26 +96,20 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
      * Picks next available color.
      *
      * @param territory the clicked territory
-     * @return the new color's resource id
+     * @return the new color's index
      */
-    private int pickNextColor(Territory territory) {
+    private int pickNextColorIndex(Territory territory) {
         int colorIndex = territory.getColorIndex();
-        do {
-            colorIndex++;
-            if (colorIndex > 6) {
-                colorIndex = 0;
-            }
-        } while (mPickedColors.contains(colorIndex));
-
-        mPickedColors.remove(territory.getColorIndex());
-        territory.setColorIndex(colorIndex);
-        mPickedColors.add(colorIndex);
-        return getColor(colorIndex);
+        colorIndex++;
+        if (colorIndex > 6) {
+            colorIndex = 0;
+        }
+        return colorIndex;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPlayerClickEvent(PlayerClickEvent event) {
-        // TODO player click
+        // TODO player clicked => change all his territories color
     }
 
     /**

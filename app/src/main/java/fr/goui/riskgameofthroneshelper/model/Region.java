@@ -13,7 +13,7 @@ public class Region implements ListItem {
 
     private List<Territory> territories;
 
-    private int colorIndex;
+    private int colorIndex = -1;
 
     public String getName() {
         return name;

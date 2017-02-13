@@ -11,7 +11,7 @@ public class Territory implements ListItem {
 
     private int port;
 
-    private int colorIndex;
+    private int colorIndex = -1;
 
     public String getName() {
         return name;
