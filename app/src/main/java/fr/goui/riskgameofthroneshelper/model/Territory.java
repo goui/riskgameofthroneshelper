@@ -11,6 +11,12 @@ public class Territory {
 
     private int port;
 
+    public Territory(String name, int castle, int port) {
+        this.name = name;
+        this.castle = castle;
+        this.port = port;
+    }
+
     public String getName() {
         return name;
     }

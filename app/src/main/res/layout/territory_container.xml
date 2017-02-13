@@ -11,6 +11,7 @@
         android:padding="4dp">
 
         <EditText
+            android:id="@+id/territory_search_edit_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
@@ -25,7 +26,11 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/territory_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="4dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
         tools:listitem="@layout/item_territory" />
 </LinearLayout>

@@ -2,6 +2,7 @@ package fr.goui.riskgameofthroneshelper;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.goui.riskgameofthroneshelper.adapter.PlayerAdapter;
+import fr.goui.riskgameofthroneshelper.adapter.TerritoryAdapter;
 import fr.goui.riskgameofthroneshelper.model.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
     private PlayerAdapter mPlayerAdapter;
 
+    @BindView(R.id.territory_recycler_view)
+    RecyclerView mTerritoryRecyclerView;
+
+    private TerritoryAdapter mTerritoryAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
         mPlayerRecyclerView.setHasFixedSize(true);
         mPlayerAdapter = new PlayerAdapter(this);
         mPlayerRecyclerView.setAdapter(mPlayerAdapter);
+
+        mTerritoryRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        mTerritoryRecyclerView.setHasFixedSize(true);
+        mTerritoryAdapter = new TerritoryAdapter(this);
+        mTerritoryRecyclerView.setAdapter(mTerritoryAdapter);
     }
 
     @OnClick(R.id.player_minus_button)
