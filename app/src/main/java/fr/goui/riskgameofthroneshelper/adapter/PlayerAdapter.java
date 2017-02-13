@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.goui.riskgameofthroneshelper.R;
+import fr.goui.riskgameofthroneshelper.event.PlayerClickEvent;
 import fr.goui.riskgameofthroneshelper.model.Player;
 
 /**
@@ -54,8 +57,10 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (mListOfPlayers.size() < 7 && mListOfPlayers.size() > 2) { // preventing picking color when max players or only 2 players
+                    if (mListOfPlayers.size() < 7) { // preventing picking color when max players
+                        int oldColorIndex = player.getColorIndex();
                         holder.mPlayerTroopsTextView.setBackgroundColor(pickNextColor(player));
+                        EventBus.getDefault().post(new PlayerClickEvent(player, oldColorIndex));
                     }
                 }
             });
@@ -125,22 +130,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
         mListOfPlayers.remove(player);
         mPickedColors.remove(player.getColorIndex());
 
-        if (mListOfPlayers.size() == 2) {
-            reset();
-        }
-
         notifyDataSetChanged();
-    }
-
-    /**
-     * Resets the default color assignement.
-     */
-    private void reset() {
-        mListOfPlayers.get(0).setColorIndex(0);
-        mListOfPlayers.get(1).setColorIndex(1);
-        mPickedColors.clear();
-        mPickedColors.add(0);
-        mPickedColors.add(1);
     }
 
     @Override

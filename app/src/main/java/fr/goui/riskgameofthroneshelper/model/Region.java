@@ -13,6 +13,8 @@ public class Region implements ListItem {
 
     private List<Territory> territories;
 
+    private int colorIndex;
+
     public String getName() {
         return name;
     }
@@ -35,5 +37,13 @@ public class Region implements ListItem {
 
     public void setTerritories(List<Territory> territories) {
         this.territories = territories;
+    }
+
+    public int getColorIndex() {
+        return colorIndex;
+    }
+
+    public void setColorIndex(int colorIndex) {
+        this.colorIndex = colorIndex;
     }
 }

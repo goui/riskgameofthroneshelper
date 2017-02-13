@@ -11,6 +11,8 @@ public class Territory implements ListItem {
 
     private int port;
 
+    private int colorIndex;
+
     public String getName() {
         return name;
     }
@@ -33,5 +35,13 @@ public class Territory implements ListItem {
 
     public void setPort(int port) {
         this.port = port;
+    }
+
+    public int getColorIndex() {
+        return colorIndex;
+    }
+
+    public void setColorIndex(int colorIndex) {
+        this.colorIndex = colorIndex;
     }
 }
