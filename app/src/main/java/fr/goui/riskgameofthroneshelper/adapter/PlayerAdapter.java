@@ -13,6 +13,8 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -20,11 +22,12 @@ import butterknife.ButterKnife;
 import fr.goui.riskgameofthroneshelper.R;
 import fr.goui.riskgameofthroneshelper.event.PlayerClickEvent;
 import fr.goui.riskgameofthroneshelper.model.Player;
+import fr.goui.riskgameofthroneshelper.model.PlayerModel;
 
 /**
  *
  */
-public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerViewHolder> {
+public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerViewHolder> implements Observer {
 
     private Context mContext;
 
@@ -32,15 +35,13 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
 
     private List<Player> mListOfPlayers;
 
-    private Set<Integer> mPickedColors;
+    private PlayerModel mPlayerModel = PlayerModel.getInstance();
 
     public PlayerAdapter(Context context) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
-        mListOfPlayers = new ArrayList<>();
-        mPickedColors = new HashSet<>();
-        addPlayer();
-        addPlayer();
+        mListOfPlayers = PlayerModel.getInstance().getPlayers();
+        mPlayerModel.addObserver(this);
     }
 
     @Override
@@ -59,7 +60,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
                 public void onClick(View view) {
                     if (mListOfPlayers.size() < 7) { // preventing picking color when max players
                         int oldColorIndex = player.getColorIndex();
-                        holder.mPlayerTroopsTextView.setBackgroundColor(pickNextColor(player));
+                        holder.mPlayerTroopsTextView.setBackgroundColor(getColor(mPlayerModel.getNextAvailableColorIndex(player)));
                         EventBus.getDefault().post(new PlayerClickEvent(player, oldColorIndex));
                     }
                 }
@@ -80,57 +81,9 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
         return color;
     }
 
-    /**
-     * Picks next available color.
-     *
-     * @param player the clicked player
-     * @return the new color's resource id
-     */
-    private int pickNextColor(Player player) {
-        int colorIndex = player.getColorIndex();
-        do {
-            colorIndex++;
-            if (colorIndex > 6) {
-                colorIndex = 0;
-            }
-        } while (mPickedColors.contains(colorIndex));
-
-        mPickedColors.remove(player.getColorIndex());
-        player.setColorIndex(colorIndex);
-        mPickedColors.add(colorIndex);
-        return getColor(colorIndex);
-    }
-
-    /**
-     * Adds a new player.
-     */
-    public void addPlayer() {
-        int colorIndex = 0;
-        for (int i = 0; i < 7; i++) {
-            if (!mPickedColors.contains(i)) {
-                colorIndex = i;
-                break; // sorry Cyril
-            }
-        }
-
-        Player player = new Player();
-        player.setTroops(0);
-        player.setColorIndex(colorIndex);
-        mListOfPlayers.add(player);
-        mPickedColors.add(colorIndex);
-
-        notifyDataSetChanged();
-    }
-
-    /**
-     * Deletes last player.
-     */
-    public void deletePlayer() {
-        Player player = mListOfPlayers.get(mListOfPlayers.size() - 1);
-        mListOfPlayers.remove(player);
-        mPickedColors.remove(player.getColorIndex());
-
-        notifyDataSetChanged();
+    @Override
+    public void update(Observable observable, Object o) {
+        // TODO
     }
 
     @Override

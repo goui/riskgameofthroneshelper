@@ -23,6 +23,7 @@ import fr.goui.riskgameofthroneshelper.adapter.PlayerAdapter;
 import fr.goui.riskgameofthroneshelper.adapter.TerritoryAdapter;
 import fr.goui.riskgameofthroneshelper.model.ListItem;
 import fr.goui.riskgameofthroneshelper.model.Map;
+import fr.goui.riskgameofthroneshelper.model.PlayerModel;
 import fr.goui.riskgameofthroneshelper.model.Region;
 import fr.goui.riskgameofthroneshelper.model.Territory;
 
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
     private List<ListItem> mListOfRegionsAndTerritories;
 
+    /* PLAYER */
+
     @BindView(R.id.player_number_text_view)
     TextView mNbOfPlayersTextView;
 
@@ -50,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView mPlayerRecyclerView;
 
     private PlayerAdapter mPlayerAdapter;
+
+    private PlayerModel mPlayerModel = PlayerModel.getInstance();
+
+    /* TERRITORY */
 
     @BindView(R.id.territory_recycler_view)
     RecyclerView mTerritoryRecyclerView;
@@ -90,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     public void onMinusClick() {
         if (mOldNumberOfPlayers > MIN_PLAYERS) {
             mNewNumberOfPlayers = mOldNumberOfPlayers - 1;
-            mPlayerAdapter.deletePlayer();
+            mPlayerModel.removePlayer();
             update();
         }
     }
@@ -99,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     public void onPlusClick() {
         if (mOldNumberOfPlayers < MAX_PLAYERS) {
             mNewNumberOfPlayers = mOldNumberOfPlayers + 1;
-            mPlayerAdapter.addPlayer();
+            mPlayerModel.addPlayer();
             update();
         }
     }

@@ -12,7 +12,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +22,7 @@ import fr.goui.riskgameofthroneshelper.R;
 import fr.goui.riskgameofthroneshelper.event.PlayerClickEvent;
 import fr.goui.riskgameofthroneshelper.event.TerritoryClickEvent;
 import fr.goui.riskgameofthroneshelper.model.ListItem;
+import fr.goui.riskgameofthroneshelper.model.Player;
 import fr.goui.riskgameofthroneshelper.model.Region;
 import fr.goui.riskgameofthroneshelper.model.Territory;
 
@@ -37,10 +40,13 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private List<ListItem> mItems;
 
+    private Set<Integer> mPickedColors;
+
     public TerritoryAdapter(Context context, List<ListItem> items) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
         mItems = items;
+        mPickedColors = new HashSet<>();
     }
 
     @Override
@@ -53,7 +59,7 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (mItems.get(position) instanceof Region) {
             Region region = (Region) mItems.get(position);
             if (region != null) {
@@ -64,17 +70,40 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         } else {
             final Territory territory = (Territory) mItems.get(position);
             if (territory != null) {
-                TerritoryViewHolder tvh = (TerritoryViewHolder) holder;
+                final TerritoryViewHolder tvh = (TerritoryViewHolder) holder;
                 tvh.territoryNameTextView.setText(territory.getName());
                 tvh.territoryNameTextView.setBackgroundColor(getColor(territory.getColorIndex()));
                 tvh.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        EventBus.getDefault().post(new TerritoryClickEvent(territory));
+                        int oldColorIndex = territory.getColorIndex();
+                        tvh.territoryNameTextView.setBackgroundColor(pickNextColor(territory));
+                        EventBus.getDefault().post(new TerritoryClickEvent(territory, oldColorIndex));
                     }
                 });
             }
         }
+    }
+
+    /**
+     * Picks next available color.
+     *
+     * @param territory the clicked territory
+     * @return the new color's resource id
+     */
+    private int pickNextColor(Territory territory) {
+        int colorIndex = territory.getColorIndex();
+        do {
+            colorIndex++;
+            if (colorIndex > 6) {
+                colorIndex = 0;
+            }
+        } while (mPickedColors.contains(colorIndex));
+
+        mPickedColors.remove(territory.getColorIndex());
+        territory.setColorIndex(colorIndex);
+        mPickedColors.add(colorIndex);
+        return getColor(colorIndex);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
