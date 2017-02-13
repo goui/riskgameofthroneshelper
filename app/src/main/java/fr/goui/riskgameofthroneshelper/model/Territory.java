@@ -3,19 +3,13 @@ package fr.goui.riskgameofthroneshelper.model;
 /**
  *
  */
-public class Territory {
+public class Territory implements ListItem {
 
     private String name;
 
     private int castle;
 
     private int port;
-
-    public Territory(String name, int castle, int port) {
-        this.name = name;
-        this.castle = castle;
-        this.port = port;
-    }
 
     public String getName() {
         return name;

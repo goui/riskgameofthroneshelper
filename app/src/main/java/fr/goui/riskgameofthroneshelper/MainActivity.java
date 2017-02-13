@@ -13,25 +13,38 @@ import com.google.gson.Gson;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.goui.riskgameofthroneshelper.adapter.PlayerAdapter;
 import fr.goui.riskgameofthroneshelper.adapter.TerritoryAdapter;
+import fr.goui.riskgameofthroneshelper.model.ListItem;
 import fr.goui.riskgameofthroneshelper.model.Map;
+import fr.goui.riskgameofthroneshelper.model.Region;
+import fr.goui.riskgameofthroneshelper.model.Territory;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
+
+    private static final int MIN_PLAYERS = 2;
+    private static final int MAX_PLAYERS = 7;
 
     private Map mWesterosMap;
 
     private Map mEssosMap;
 
+    private List<Region> mListOfRegions;
+
+    private List<ListItem> mListOfRegionsAndTerritories;
+
     @BindView(R.id.player_number_text_view)
     TextView mNbOfPlayersTextView;
 
-    private int mNumberOfPlayers = 2;
+    private int mOldNumberOfPlayers;
+    private int mNewNumberOfPlayers;
 
     @BindView(R.id.player_recycler_view)
     RecyclerView mPlayerRecyclerView;
@@ -49,23 +62,34 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        getMaps();
+        init();
 
         mPlayerRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mPlayerRecyclerView.setHasFixedSize(true);
         mPlayerAdapter = new PlayerAdapter(this);
         mPlayerRecyclerView.setAdapter(mPlayerAdapter);
 
-        mTerritoryRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                int span = 1;
+                if (mTerritoryAdapter.getItemViewType(position) == TerritoryAdapter.TYPE_REGION) {
+                    span = 3;
+                }
+                return span;
+            }
+        });
+        mTerritoryRecyclerView.setLayoutManager(gridLayoutManager);
         mTerritoryRecyclerView.setHasFixedSize(true);
-        mTerritoryAdapter = new TerritoryAdapter(this);
+        mTerritoryAdapter = new TerritoryAdapter(this, mListOfRegionsAndTerritories);
         mTerritoryRecyclerView.setAdapter(mTerritoryAdapter);
     }
 
     @OnClick(R.id.player_minus_button)
     public void onMinusClick() {
-        if (mNumberOfPlayers > 2) {
-            mNumberOfPlayers--;
+        if (mOldNumberOfPlayers > MIN_PLAYERS) {
+            mNewNumberOfPlayers = mOldNumberOfPlayers - 1;
             mPlayerAdapter.deletePlayer();
             update();
         }
@@ -73,15 +97,51 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.player_plus_button)
     public void onPlusClick() {
-        if (mNumberOfPlayers < 7) {
-            mNumberOfPlayers++;
+        if (mOldNumberOfPlayers < MAX_PLAYERS) {
+            mNewNumberOfPlayers = mOldNumberOfPlayers + 1;
             mPlayerAdapter.addPlayer();
             update();
         }
     }
 
     private void update() {
-        mNbOfPlayersTextView.setText("" + mNumberOfPlayers);
+        mNbOfPlayersTextView.setText("" + mNewNumberOfPlayers);
+
+        if (mNewNumberOfPlayers == MIN_PLAYERS && mOldNumberOfPlayers == 3) {
+            mListOfRegions = mEssosMap.getRegions();
+            flatten();
+            mTerritoryAdapter.notifyDataSetChanged();
+        } else if ((mNewNumberOfPlayers > MIN_PLAYERS && mNewNumberOfPlayers <= MAX_PLAYERS - MIN_PLAYERS)
+                && (mOldNumberOfPlayers == MIN_PLAYERS || mOldNumberOfPlayers > MAX_PLAYERS - MIN_PLAYERS)) {
+            mListOfRegions = mWesterosMap.getRegions();
+            flatten();
+            mTerritoryAdapter.notifyDataSetChanged();
+        } else if (mNewNumberOfPlayers > MAX_PLAYERS - MIN_PLAYERS && mOldNumberOfPlayers == MAX_PLAYERS - MIN_PLAYERS) {
+            mListOfRegions = mWesterosMap.getRegions();
+            mListOfRegions.addAll(mEssosMap.getRegions());
+            flatten();
+            mTerritoryAdapter.notifyDataSetChanged();
+        }
+
+        mOldNumberOfPlayers = mNewNumberOfPlayers;
+    }
+
+    private void flatten() {
+        mListOfRegionsAndTerritories.clear();
+        for (Region region : mListOfRegions) {
+            mListOfRegionsAndTerritories.add(region);
+            for (Territory territory : region.getTerritories()) {
+                mListOfRegionsAndTerritories.add(territory);
+            }
+        }
+    }
+
+    private void init() {
+        getMaps();
+        mOldNumberOfPlayers = MIN_PLAYERS;
+        mListOfRegions = mEssosMap.getRegions();
+        mListOfRegionsAndTerritories = new ArrayList<>();
+        flatten();
     }
 
     /**

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  *
  */
-public class Region {
+public class Region implements ListItem {
 
     private String name;
 

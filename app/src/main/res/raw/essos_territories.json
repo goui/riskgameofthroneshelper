@@ -1,213 +1,211 @@
 {
-  "map": {
-    "name": "essos",
-    "regions": [
-      {
-        "name": "Andalos",
-        "bonus": 4,
-        "territories": [
-          {
-            "name": "Braavosian Coastlands",
-            "castle": 1,
-            "port": 1
-          },
-          {
-            "name": "Forest of Qohor",
-            "castle": 1,
-            "port": 0
-          },
-          {
-            "name": "Hills of Norvos",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "The Axe",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "The Flatlands",
-            "castle": 1,
-            "port": 1
-          },
-          {
-            "name": "The Golden Fields",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "Upper Rhoyne",
-            "castle": 0,
-            "port": 0
-          }
-        ]
-      },
-      {
-        "name": "Jade Sea Coast",
-        "bonus": 1,
-        "territories": [
-          {
-            "name": "Bayasabhad",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "Northern Jade Sea",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "Qarth",
-            "castle": 1,
-            "port": 1
-          },
-          {
-            "name": "Samyrian",
-            "castle": 0,
-            "port": 0
-          }
-        ]
-      },
-      {
-        "name": "Lands of Long Summer",
-        "bonus": 1,
-        "territories": [
-          {
-            "name": "Mantarys",
-            "castle": 1,
-            "port": 0
-          },
-          {
-            "name": "Oros",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "The Sea of Sights",
-            "castle": 0,
-            "port": 1
-          },
-          {
-            "name": "Valyria",
-            "castle": 1,
-            "port": 0
-          }
-        ]
-      },
-      {
-        "name": "Slaver's Bay",
-        "bonus": 3,
-        "territories": [
-          {
-            "name": "Astapor",
-            "castle": 1,
-            "port": 1
-          },
-          {
-            "name": "Meereen",
-            "castle": 1,
-            "port": 1
-          },
-          {
-            "name": "New Ghis",
-            "castle": 0,
-            "port": 1
-          },
-          {
-            "name": "Old Ghis",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "The Red Waste",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "Yunkai",
-            "castle": 1,
-            "port": 0
-          }
-        ]
-      },
-      {
-        "name": "The Disputed Lands",
-        "bonus": 3,
-        "territories": [
-          {
-            "name": "Lower Rhoyne",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "Lys",
-            "castle": 0,
-            "port": 1
-          },
-          {
-            "name": "Myr",
-            "castle": 0,
-            "port": 1
-          },
-          {
-            "name": "The Orange Shore",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "Tyrosh",
-            "castle": 1,
-            "port": 0
-          },
-          {
-            "name": "Volantis",
-            "castle": 1,
-            "port": 1
-          }
-        ]
-      },
-      {
-        "name": "The Dothraki Sea",
-        "bonus": 4,
-        "territories": [
-          {
-            "name": "Lhazar",
-            "castle": 1,
-            "port": 0
-          },
-          {
-            "name": "Sarnor",
-            "castle": 1,
-            "port": 0
-          },
-          {
-            "name": "Eastern Dothraki Sea",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "Northern Dothraki Sea",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "The Footprint",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "Vaes Dothrak",
-            "castle": 1,
-            "port": 0
-          },
-          {
-            "name": "Western Dothraki Sea",
-            "castle": 0,
-            "port": 0
-          }
-        ]
-      }
-    ]
-  }
+  "name": "essos",
+  "regions": [
+    {
+      "name": "Andalos",
+      "bonus": 4,
+      "territories": [
+        {
+          "name": "Braavosian Coastlands",
+          "castle": 1,
+          "port": 1
+        },
+        {
+          "name": "Forest of Qohor",
+          "castle": 1,
+          "port": 0
+        },
+        {
+          "name": "Hills of Norvos",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "The Axe",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "The Flatlands",
+          "castle": 1,
+          "port": 1
+        },
+        {
+          "name": "The Golden Fields",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "Upper Rhoyne",
+          "castle": 0,
+          "port": 0
+        }
+      ]
+    },
+    {
+      "name": "Jade Sea Coast",
+      "bonus": 1,
+      "territories": [
+        {
+          "name": "Bayasabhad",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "Northern Jade Sea",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "Qarth",
+          "castle": 1,
+          "port": 1
+        },
+        {
+          "name": "Samyrian",
+          "castle": 0,
+          "port": 0
+        }
+      ]
+    },
+    {
+      "name": "Lands of Long Summer",
+      "bonus": 1,
+      "territories": [
+        {
+          "name": "Mantarys",
+          "castle": 1,
+          "port": 0
+        },
+        {
+          "name": "Oros",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "The Sea of Sights",
+          "castle": 0,
+          "port": 1
+        },
+        {
+          "name": "Valyria",
+          "castle": 1,
+          "port": 0
+        }
+      ]
+    },
+    {
+      "name": "Slaver's Bay",
+      "bonus": 3,
+      "territories": [
+        {
+          "name": "Astapor",
+          "castle": 1,
+          "port": 1
+        },
+        {
+          "name": "Meereen",
+          "castle": 1,
+          "port": 1
+        },
+        {
+          "name": "New Ghis",
+          "castle": 0,
+          "port": 1
+        },
+        {
+          "name": "Old Ghis",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "The Red Waste",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "Yunkai",
+          "castle": 1,
+          "port": 0
+        }
+      ]
+    },
+    {
+      "name": "The Disputed Lands",
+      "bonus": 3,
+      "territories": [
+        {
+          "name": "Lower Rhoyne",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "Lys",
+          "castle": 0,
+          "port": 1
+        },
+        {
+          "name": "Myr",
+          "castle": 0,
+          "port": 1
+        },
+        {
+          "name": "The Orange Shore",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "Tyrosh",
+          "castle": 1,
+          "port": 0
+        },
+        {
+          "name": "Volantis",
+          "castle": 1,
+          "port": 1
+        }
+      ]
+    },
+    {
+      "name": "The Dothraki Sea",
+      "bonus": 4,
+      "territories": [
+        {
+          "name": "Lhazar",
+          "castle": 1,
+          "port": 0
+        },
+        {
+          "name": "Sarnor",
+          "castle": 1,
+          "port": 0
+        },
+        {
+          "name": "Eastern Dothraki Sea",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "Northern Dothraki Sea",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "The Footprint",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "Vaes Dothrak",
+          "castle": 1,
+          "port": 0
+        },
+        {
+          "name": "Western Dothraki Sea",
+          "castle": 0,
+          "port": 0
+        }
+      ]
+    }
+  ]
 }

@@ -1,296 +1,294 @@
 {
-  "map": {
-    "name": "westeros",
-    "regions": [
-      {
-        "name": "Dorne",
-        "bonus": 1,
-        "territories": [
-          {
-            "name": "Greenblood",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "Red Mountains",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "Sandstone",
-            "castle": 1,
-            "port": 0
-          },
-          {
-            "name": "Sunspear",
-            "castle": 1,
-            "port": 1
-          }
-        ]
-      },
-      {
-        "name": "The Crownlands",
-        "bonus": 2,
-        "territories": [
-          {
-            "name": "Crackclaw Point",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "Dragonstone",
-            "castle": 1,
-            "port": 1
-          },
-          {
-            "name": "King's Landing",
-            "castle": 1,
-            "port": 1
-          },
-          {
-            "name": "Kingswood",
-            "castle": 0,
-            "port": 0
-          }
-        ]
-      },
-      {
-        "name": "The Iron Islands",
-        "bonus": 1,
-        "territories": [
-          {
-            "name": "Harlaw",
-            "castle": 0,
-            "port": 1
-          },
-          {
-            "name": "Pyke",
-            "castle": 1,
-            "port": 1
-          }
-        ]
-      },
-      {
-        "name": "The North",
-        "bonus": 5,
-        "territories": [
-          {
-            "name": "Barrowlands",
-            "castle": 1,
-            "port": 0
-          },
-          {
-            "name": "Bear Island",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "Cape Kraken",
-            "castle": 0,
-            "port": 1
-          },
-          {
-            "name": "Skagos",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "Stony Shore",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "The Dreadfort",
-            "castle": 1,
-            "port": 0
-          },
-          {
-            "name": "The Gift",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "The Neck",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "White Harbor",
-            "castle": 0,
-            "port": 1
-          },
-          {
-            "name": "Widow's Watch",
-            "castle": 0,
-            "port": 1
-          },
-          {
-            "name": "Winterfell",
-            "castle": 1,
-            "port": 0
-          },
-          {
-            "name": "Wolfswood",
-            "castle": 0,
-            "port": 1
-          }
-        ]
-      },
-      {
-        "name": "The Reach",
-        "bonus": 4,
-        "territories": [
-          {
-            "name": "Blackwater Rush",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "Highgarden",
-            "castle": 1,
-            "port": 0
-          },
-          {
-            "name": "Oldtown",
-            "castle": 1,
-            "port": 1
-          },
-          {
-            "name": "Searoad Marches",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "The Arbor",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "The Mander",
-            "castle": 1,
-            "port": 0
-          },
-          {
-            "name": "Three Towers",
-            "castle": 0,
-            "port": 0
-          }
-        ]
-      },
-      {
-        "name": "The Riverlands",
-        "bonus": 2,
-        "territories": [
-          {
-            "name": "Harrenhal",
-            "castle": 1,
-            "port": 0
-          },
-          {
-            "name": "Riverrun",
-            "castle": 1,
-            "port": 0
-          },
-          {
-            "name": "Stoney Sept",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "The Trident",
-            "castle": 0,
-            "port": 1
-          },
-          {
-            "name": "The Twins",
-            "castle": 1,
-            "port": 0
-          }
-        ]
-      },
-      {
-        "name": "The Stormlands",
-        "bonus": 1,
-        "territories": [
-          {
-            "name": "Dornish Marches",
-            "castle": 1,
-            "port": 0
-          },
-          {
-            "name": "Rainwood",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "Storm's End",
-            "castle": 1,
-            "port": 1
-          },
-          {
-            "name": "Tarth",
-            "castle": 0,
-            "port": 0
-          }
-        ]
-      },
-      {
-        "name": "The Vale of Arryn",
-        "bonus": 1,
-        "territories": [
-          {
-            "name": "Gulltown",
-            "castle": 0,
-            "port": 1
-          },
-          {
-            "name": "Mountains of the Moon",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "The Eyrie",
-            "castle": 1,
-            "port": 0
-          },
-          {
-            "name": "The Fingers",
-            "castle": 0,
-            "port": 0
-          }
-        ]
-      },
-      {
-        "name": "The Westerlands",
-        "bonus": 2,
-        "territories": [
-          {
-            "name": "Casterly Rock",
-            "castle": 1,
-            "port": 1
-          },
-          {
-            "name": "Crakehall",
-            "castle": 1,
-            "port": 0
-          },
-          {
-            "name": "Golden Tooth",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "Silverhill",
-            "castle": 0,
-            "port": 0
-          },
-          {
-            "name": "The Crag",
-            "castle": 0,
-            "port": 0
-          }
-        ]
-      }
-    ]
-  }
+  "name": "westeros",
+  "regions": [
+    {
+      "name": "Dorne",
+      "bonus": 1,
+      "territories": [
+        {
+          "name": "Greenblood",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "Red Mountains",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "Sandstone",
+          "castle": 1,
+          "port": 0
+        },
+        {
+          "name": "Sunspear",
+          "castle": 1,
+          "port": 1
+        }
+      ]
+    },
+    {
+      "name": "The Crownlands",
+      "bonus": 2,
+      "territories": [
+        {
+          "name": "Crackclaw Point",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "Dragonstone",
+          "castle": 1,
+          "port": 1
+        },
+        {
+          "name": "King's Landing",
+          "castle": 1,
+          "port": 1
+        },
+        {
+          "name": "Kingswood",
+          "castle": 0,
+          "port": 0
+        }
+      ]
+    },
+    {
+      "name": "The Iron Islands",
+      "bonus": 1,
+      "territories": [
+        {
+          "name": "Harlaw",
+          "castle": 0,
+          "port": 1
+        },
+        {
+          "name": "Pyke",
+          "castle": 1,
+          "port": 1
+        }
+      ]
+    },
+    {
+      "name": "The North",
+      "bonus": 5,
+      "territories": [
+        {
+          "name": "Barrowlands",
+          "castle": 1,
+          "port": 0
+        },
+        {
+          "name": "Bear Island",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "Cape Kraken",
+          "castle": 0,
+          "port": 1
+        },
+        {
+          "name": "Skagos",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "Stony Shore",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "The Dreadfort",
+          "castle": 1,
+          "port": 0
+        },
+        {
+          "name": "The Gift",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "The Neck",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "White Harbor",
+          "castle": 0,
+          "port": 1
+        },
+        {
+          "name": "Widow's Watch",
+          "castle": 0,
+          "port": 1
+        },
+        {
+          "name": "Winterfell",
+          "castle": 1,
+          "port": 0
+        },
+        {
+          "name": "Wolfswood",
+          "castle": 0,
+          "port": 1
+        }
+      ]
+    },
+    {
+      "name": "The Reach",
+      "bonus": 4,
+      "territories": [
+        {
+          "name": "Blackwater Rush",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "Highgarden",
+          "castle": 1,
+          "port": 0
+        },
+        {
+          "name": "Oldtown",
+          "castle": 1,
+          "port": 1
+        },
+        {
+          "name": "Searoad Marches",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "The Arbor",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "The Mander",
+          "castle": 1,
+          "port": 0
+        },
+        {
+          "name": "Three Towers",
+          "castle": 0,
+          "port": 0
+        }
+      ]
+    },
+    {
+      "name": "The Riverlands",
+      "bonus": 2,
+      "territories": [
+        {
+          "name": "Harrenhal",
+          "castle": 1,
+          "port": 0
+        },
+        {
+          "name": "Riverrun",
+          "castle": 1,
+          "port": 0
+        },
+        {
+          "name": "Stoney Sept",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "The Trident",
+          "castle": 0,
+          "port": 1
+        },
+        {
+          "name": "The Twins",
+          "castle": 1,
+          "port": 0
+        }
+      ]
+    },
+    {
+      "name": "The Stormlands",
+      "bonus": 1,
+      "territories": [
+        {
+          "name": "Dornish Marches",
+          "castle": 1,
+          "port": 0
+        },
+        {
+          "name": "Rainwood",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "Storm's End",
+          "castle": 1,
+          "port": 1
+        },
+        {
+          "name": "Tarth",
+          "castle": 0,
+          "port": 0
+        }
+      ]
+    },
+    {
+      "name": "The Vale of Arryn",
+      "bonus": 1,
+      "territories": [
+        {
+          "name": "Gulltown",
+          "castle": 0,
+          "port": 1
+        },
+        {
+          "name": "Mountains of the Moon",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "The Eyrie",
+          "castle": 1,
+          "port": 0
+        },
+        {
+          "name": "The Fingers",
+          "castle": 0,
+          "port": 0
+        }
+      ]
+    },
+    {
+      "name": "The Westerlands",
+      "bonus": 2,
+      "territories": [
+        {
+          "name": "Casterly Rock",
+          "castle": 1,
+          "port": 1
+        },
+        {
+          "name": "Crakehall",
+          "castle": 1,
+          "port": 0
+        },
+        {
+          "name": "Golden Tooth",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "Silverhill",
+          "castle": 0,
+          "port": 0
+        },
+        {
+          "name": "The Crag",
+          "castle": 0,
+          "port": 0
+        }
+      ]
+    }
+  ]
 }
