@@ -2,7 +2,10 @@ package fr.goui.riskgameofthroneshelper;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -10,6 +13,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import fr.goui.riskgameofthroneshelper.adapter.PlayerAdapter;
 import fr.goui.riskgameofthroneshelper.model.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,14 +26,50 @@ public class MainActivity extends AppCompatActivity {
 
     private Map mEssosMap;
 
+    @BindView(R.id.player_number_text_view)
+    TextView mNbOfPlayersTextView;
+
+    private int mNumberOfPlayers = 2;
+
+    @BindView(R.id.player_recycler_view)
+    RecyclerView mPlayerRecyclerView;
+
+    private PlayerAdapter mPlayerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         getMaps();
 
+        mPlayerRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mPlayerRecyclerView.setHasFixedSize(true);
+        mPlayerAdapter = new PlayerAdapter(this);
+        mPlayerRecyclerView.setAdapter(mPlayerAdapter);
+    }
 
+    @OnClick(R.id.player_minus_button)
+    public void onMinusClick() {
+        if (mNumberOfPlayers > 2) {
+            mNumberOfPlayers--;
+            mPlayerAdapter.deletePlayer();
+            update();
+        }
+    }
+
+    @OnClick(R.id.player_plus_button)
+    public void onPlusClick() {
+        if (mNumberOfPlayers < 7) {
+            mNumberOfPlayers++;
+            mPlayerAdapter.addPlayer();
+            update();
+        }
+    }
+
+    private void update() {
+        mNbOfPlayersTextView.setText("" + mNumberOfPlayers);
     }
 
     private void getMaps() {

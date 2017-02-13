@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="player_color">
+        <item>@color/colorRed</item>
+        <item>@color/colorCyan</item>
+        <item>@color/colorGrey</item>
+        <item>@color/colorBlack</item>
+        <item>@color/colorYellow</item>
+        <item>@color/colorGreen</item>
+        <item>@color/colorOrange</item>
+    </array>
+</resources>
