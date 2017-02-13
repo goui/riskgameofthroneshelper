@@ -54,7 +54,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (mListOfPlayers.size() < 7) { // preventing picking color when max players
+                    if (mListOfPlayers.size() < 7 && mListOfPlayers.size() > 2) { // preventing picking color when max players or only 2 players
                         holder.mPlayerTroopsTextView.setBackgroundColor(pickNextColor(player));
                     }
                 }
@@ -125,7 +125,22 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
         mListOfPlayers.remove(player);
         mPickedColors.remove(player.getColorIndex());
 
+        if (mListOfPlayers.size() == 2) {
+            reset();
+        }
+
         notifyDataSetChanged();
+    }
+
+    /**
+     * Resets the default color assignement.
+     */
+    private void reset() {
+        mListOfPlayers.get(0).setColorIndex(0);
+        mListOfPlayers.get(1).setColorIndex(1);
+        mPickedColors.clear();
+        mPickedColors.add(0);
+        mPickedColors.add(1);
     }
 
     @Override
