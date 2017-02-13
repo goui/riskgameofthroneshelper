@@ -83,7 +83,9 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
 
     @Override
     public void update(Observable observable, Object o) {
-        // TODO
+        if (observable instanceof PlayerModel) {
+            notifyDataSetChanged();
+        }
     }
 
     @Override
