@@ -11,9 +11,15 @@ public class TerritoryClickEvent {
 
     private int oldColorIndex;
 
-    public TerritoryClickEvent(Territory territory, int oldColorIndex) {
+    private int newColorIndex;
+
+    private int adapterPosition;
+
+    public TerritoryClickEvent(Territory territory, int adapterPosition, int oldColorIndex, int newColorIndex) {
         this.territory = territory;
         this.oldColorIndex = oldColorIndex;
+        this.newColorIndex = newColorIndex;
+        this.adapterPosition = adapterPosition;
     }
 
     public Territory getTerritory() {
@@ -22,5 +28,13 @@ public class TerritoryClickEvent {
 
     public int getOldColorIndex() {
         return oldColorIndex;
+    }
+
+    public int getNewColorIndex() {
+        return newColorIndex;
+    }
+
+    public int getAdapterPosition() {
+        return adapterPosition;
     }
 }

@@ -85,4 +85,24 @@ public class PlayerModel extends Observable {
         pickedColors.add(colorIndex);
         return colorIndex;
     }
+
+    public Set<Integer> getPickedColors() {
+        return pickedColors;
+    }
+
+    /**
+     * Finds a player by his color index.
+     *
+     * @param colorIndex color index
+     * @return the player with provided color index
+     */
+    public Player findPlayerByColorIndex(int colorIndex) {
+        Player player = null;
+        for (Player currentPlayer : players) {
+            if (currentPlayer.getColorIndex() == colorIndex) {
+                player = currentPlayer;
+            }
+        }
+        return player;
+    }
 }

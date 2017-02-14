@@ -3,33 +3,31 @@ package fr.goui.riskgameofthroneshelper.adapter;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Observable;
+import java.util.Observer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.goui.riskgameofthroneshelper.R;
-import fr.goui.riskgameofthroneshelper.event.PlayerClickEvent;
 import fr.goui.riskgameofthroneshelper.event.TerritoryClickEvent;
 import fr.goui.riskgameofthroneshelper.model.ListItem;
-import fr.goui.riskgameofthroneshelper.model.Player;
+import fr.goui.riskgameofthroneshelper.model.PlayerModel;
 import fr.goui.riskgameofthroneshelper.model.Region;
 import fr.goui.riskgameofthroneshelper.model.Territory;
 
 /**
  *
  */
-public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Observer {
 
     public static final int TYPE_REGION = 1;
     public static final int TYPE_TERRITORY = 2;
@@ -40,10 +38,13 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private List<ListItem> mItems;
 
+    private PlayerModel mPlayerModel = PlayerModel.getInstance();
+
     public TerritoryAdapter(Context context, List<ListItem> items) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
         mItems = items;
+        mPlayerModel.addObserver(this);
     }
 
     @Override
@@ -56,7 +57,7 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (mItems.get(position) instanceof Region) {
             Region region = (Region) mItems.get(position);
             if (region != null) {
@@ -74,6 +75,7 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 final TerritoryViewHolder tvh = (TerritoryViewHolder) holder;
                 tvh.territoryNameTextView.setText(territory.getName());
                 if (territory.getColorIndex() > -1) {
+                    Log.i("TAGGG - adapter", "changing color to " + territory.getColorIndex());
                     tvh.territoryNameTextView.setBackgroundColor(getColor(territory.getColorIndex()));
                 } else {
                     tvh.territoryNameTextView.setBackgroundResource(android.R.color.transparent);
@@ -83,9 +85,8 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     public void onClick(View view) {
                         int oldColorIndex = territory.getColorIndex();
                         int newColorIndex = pickNextColorIndex(territory);
-                        territory.setColorIndex(newColorIndex);
-                        tvh.territoryNameTextView.setBackgroundColor(getColor(newColorIndex));
-                        EventBus.getDefault().post(new TerritoryClickEvent(territory, oldColorIndex)); // TODO check if region is controlled and compute players troops
+                        Log.i("TAGGG", "old: " + oldColorIndex + ", new: " + newColorIndex);
+                        EventBus.getDefault().post(new TerritoryClickEvent(territory, tvh.getAdapterPosition(), oldColorIndex, newColorIndex));
                     }
                 });
             }
@@ -100,16 +101,20 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
      */
     private int pickNextColorIndex(Territory territory) {
         int colorIndex = territory.getColorIndex();
-        colorIndex++;
-        if (colorIndex > 6) {
-            colorIndex = 0;
-        }
+        do {
+            colorIndex++;
+            if (colorIndex > 6) {
+                colorIndex = 0;
+            }
+        } while (!mPlayerModel.getPickedColors().contains(colorIndex));
         return colorIndex;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onPlayerClickEvent(PlayerClickEvent event) {
-        // TODO player clicked => change all his territories color
+    @Override
+    public void update(Observable observable, Object o) {
+        if (observable instanceof PlayerModel) {
+            // TODO reset colors *optional*
+        }
     }
 
     /**
@@ -140,14 +145,8 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
     public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
-        EventBus.getDefault().unregister(this);
+        mPlayerModel.deleteObserver(this);
         super.onDetachedFromRecyclerView(recyclerView);
     }
 

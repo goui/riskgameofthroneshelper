@@ -11,6 +11,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -19,6 +23,9 @@ import butterknife.OnClick;
 import fr.goui.riskgameofthroneshelper.R;
 import fr.goui.riskgameofthroneshelper.adapter.PlayerAdapter;
 import fr.goui.riskgameofthroneshelper.adapter.TerritoryAdapter;
+import fr.goui.riskgameofthroneshelper.controller.TerritoryController;
+import fr.goui.riskgameofthroneshelper.event.PlayerClickEvent;
+import fr.goui.riskgameofthroneshelper.event.TerritoryClickEvent;
 import fr.goui.riskgameofthroneshelper.model.ListItem;
 
 public class MainActivity extends AppCompatActivity implements IMainView {
@@ -26,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     private List<ListItem> mListOfRegionsAndTerritories;
 
     private IMainPresenter mPresenter;
+
+    private TerritoryController mTerritoryController;
 
     /* PLAYER */
 
@@ -37,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     @BindView(R.id.player_recycler_view)
     RecyclerView mPlayerRecyclerView;
+
+    private PlayerAdapter mPlayerAdapter;
 
     /* TERRITORY */
 
@@ -59,7 +70,8 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
         mPlayerRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mPlayerRecyclerView.setHasFixedSize(true);
-        mPlayerRecyclerView.setAdapter(new PlayerAdapter(this));
+        mPlayerAdapter = new PlayerAdapter(this);
+        mPlayerRecyclerView.setAdapter(mPlayerAdapter);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         mTerritoryRecyclerView.setLayoutManager(gridLayoutManager);
@@ -122,6 +134,35 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     @Override
     public void setNumberOfPlayers(int numberOfPlayers) {
         mNbOfPlayersTextView.setText("" + numberOfPlayers);
+    }
+
+    @Override
+    public void onPause() {
+        EventBus.getDefault().unregister(this);
+        mTerritoryController = null;
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mTerritoryController = new TerritoryController();
+        EventBus.getDefault().register(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPlayerClickEvent(PlayerClickEvent event) {
+        // TODO player clicked => change all his territories color *optional*
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onTerritoryClickEvent(TerritoryClickEvent event) {
+        boolean regionHasChanged = mTerritoryController.onTerritoryClick(event);
+        mTerritoryAdapter.notifyItemChanged(event.getAdapterPosition());
+        if (regionHasChanged) { // hack to prevent scrolling to top when region changes
+            mTerritoryAdapter.notifyItemChanged(event.getTerritory().getGlobalRegionIndex());
+        }
+        mPlayerAdapter.notifyDataSetChanged();
     }
 
     @Override

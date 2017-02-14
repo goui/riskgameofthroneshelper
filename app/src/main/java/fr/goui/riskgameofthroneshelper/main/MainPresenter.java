@@ -15,6 +15,7 @@ import fr.goui.riskgameofthroneshelper.model.ListItem;
 import fr.goui.riskgameofthroneshelper.model.Map;
 import fr.goui.riskgameofthroneshelper.model.PlayerModel;
 import fr.goui.riskgameofthroneshelper.model.Region;
+import fr.goui.riskgameofthroneshelper.model.RegionModel;
 import fr.goui.riskgameofthroneshelper.model.Territory;
 import rx.Observable;
 import rx.Subscriber;
@@ -240,6 +241,7 @@ class MainPresenter implements IMainPresenter {
                 mListOfRegions.addAll(mEssosMap.getRegions());
                 break;
         }
+        RegionModel.getInstance().setRegions(mListOfRegions);
         return flatten();
     }
 
@@ -250,11 +252,16 @@ class MainPresenter implements IMainPresenter {
      */
     private boolean flatten() {
         mListOfRegionsAndTerritories.clear();
-        for (Region region : mListOfRegions) {
+        int globalIndex = 0;
+        for (int i = 0; i < mListOfRegions.size(); i++) {
+            Region region = mListOfRegions.get(i);
             mListOfRegionsAndTerritories.add(region);
             for (Territory territory : region.getTerritories()) {
+                territory.setRegionIndex(i);
+                territory.setGlobalRegionIndex(globalIndex);
                 mListOfRegionsAndTerritories.add(territory);
             }
+            globalIndex += region.getTerritories().size() + 1;
         }
         return true;
     }
