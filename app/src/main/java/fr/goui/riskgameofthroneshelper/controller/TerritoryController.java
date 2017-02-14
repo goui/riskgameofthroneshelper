@@ -48,25 +48,25 @@ public class TerritoryController {
 
         boolean regionHasChanged = false;
         if (oldPlayer != null && newPlayer != null && wasRegionControlledByOldPlayer && isRegionControlledByNewPlayer) {
-            oldPlayer.setTroops(oldPlayer.getTroops() - region.getBonus());
-            newPlayer.setTroops(newPlayer.getTroops() + region.getBonus());
+            oldPlayer.setRegionBonus(oldPlayer.getRegionBonus() - region.getBonus());
+            newPlayer.setRegionBonus(newPlayer.getRegionBonus() + region.getBonus());
             region.setColorIndex(newColorIndex);
             regionHasChanged = true;
         } else if (newPlayer != null && !wasRegionControlledByOldPlayer && isRegionControlledByNewPlayer) {
-            newPlayer.setTroops(newPlayer.getTroops() + region.getBonus());
+            newPlayer.setRegionBonus(newPlayer.getRegionBonus() + region.getBonus());
             region.setColorIndex(newColorIndex);
             regionHasChanged = true;
         } else if (oldPlayer != null && wasRegionControlledByOldPlayer && !isRegionControlledByNewPlayer) {
-            oldPlayer.setTroops(oldPlayer.getTroops() - region.getBonus());
+            oldPlayer.setRegionBonus(oldPlayer.getRegionBonus() - region.getBonus());
             region.setColorIndex(INVALID);
             regionHasChanged = true;
         }
 
         if (oldPlayer != null) {
-            oldPlayer.setTroops(oldPlayer.getTroops() - territory.getTroopsCount());
+            oldPlayer.setTerritoriesPoints(oldPlayer.getTerritoriesPoints() - territory.getTroopsCount());
         }
         if (newPlayer != null) {
-            newPlayer.setTroops(newPlayer.getTroops() + territory.getTroopsCount());
+            newPlayer.setTerritoriesPoints(newPlayer.getTerritoriesPoints() + territory.getTroopsCount());
         }
 
         return regionHasChanged;

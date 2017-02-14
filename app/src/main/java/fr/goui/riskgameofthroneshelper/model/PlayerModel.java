@@ -53,6 +53,7 @@ public class PlayerModel extends Observable {
         // notifying observers
         setChanged();
         notifyObservers();
+        // TODO reset everything if map changes *optional*
     }
 
     public void removePlayer() {
@@ -63,6 +64,8 @@ public class PlayerModel extends Observable {
         // notifying observers
         setChanged();
         notifyObservers();
+        // TODO clear this player's territories / regions colors *optional*
+        // TODO reset everything if map changes *optional*
     }
 
     /**
