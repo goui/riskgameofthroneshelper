@@ -5,25 +5,44 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="4dp">
 
-        <EditText
-            android:id="@+id/territory_search_edit_text"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/map_name_text_view"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:hint="@string/Search_here"
-            android:textSize="14sp" />
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            tools:text="The map is Essos" />
 
         <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:id="@+id/end_game_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="@string/Game_over"
+            android:padding="8dp"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_search" />
-    </LinearLayout>
+            android:src="@drawable/end_button" />
+
+        <ImageView
+            android:id="@+id/start_game_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/end_game_button"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="@string/Start_game"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/start_button" />
+    </RelativeLayout>
 
     <ProgressBar
         android:id="@+id/territory_progress_bar"
@@ -31,6 +50,13 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/territory_offset_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/Waiting_for_the_game_to_start" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/territory_recycler_view"

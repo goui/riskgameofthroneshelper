@@ -34,6 +34,8 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
 
     private PlayerModel mPlayerModel = PlayerModel.getInstance();
 
+    private boolean mHasGameStarted;
+
     public PlayerAdapter(Context context) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
@@ -52,16 +54,20 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
         if (player != null) {
             holder.mPlayerTroopsTextView.setText("" + player.getTroops());
             holder.mPlayerTroopsTextView.setBackgroundColor(getColor(player.getColorIndex()));
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mListOfPlayers.size() < 7) { // preventing picking color when max players
-                        int oldColorIndex = player.getColorIndex();
-                        holder.mPlayerTroopsTextView.setBackgroundColor(getColor(mPlayerModel.getNextAvailableColorIndex(player)));
-                        EventBus.getDefault().post(new PlayerClickEvent(player, oldColorIndex));
+            if (mHasGameStarted) {
+                holder.itemView.setOnClickListener(null);
+            } else {
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (mListOfPlayers.size() < 7) { // preventing picking color when max players
+                            int oldColorIndex = player.getColorIndex();
+                            holder.mPlayerTroopsTextView.setBackgroundColor(getColor(mPlayerModel.getNextAvailableColorIndex(player)));
+                            EventBus.getDefault().post(new PlayerClickEvent(player, oldColorIndex));
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 
@@ -83,6 +89,11 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
         if (observable instanceof PlayerModel) {
             notifyDataSetChanged();
         }
+    }
+
+    public void gameHasStarted(boolean hasGameStarted) {
+        mHasGameStarted = hasGameStarted;
+        notifyDataSetChanged();
     }
 
     @Override

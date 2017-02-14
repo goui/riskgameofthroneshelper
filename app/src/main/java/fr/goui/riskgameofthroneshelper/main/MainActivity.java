@@ -1,12 +1,16 @@
 package fr.goui.riskgameofthroneshelper.main;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +28,6 @@ import fr.goui.riskgameofthroneshelper.R;
 import fr.goui.riskgameofthroneshelper.adapter.PlayerAdapter;
 import fr.goui.riskgameofthroneshelper.adapter.TerritoryAdapter;
 import fr.goui.riskgameofthroneshelper.controller.TerritoryController;
-import fr.goui.riskgameofthroneshelper.event.PlayerClickEvent;
 import fr.goui.riskgameofthroneshelper.event.TerritoryClickEvent;
 import fr.goui.riskgameofthroneshelper.model.ListItem;
 
@@ -35,6 +38,24 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     private IMainPresenter mPresenter;
 
     private TerritoryController mTerritoryController;
+
+    @BindView(R.id.start_game_button)
+    ImageView mStartGameButton;
+
+    @BindView(R.id.end_game_button)
+    ImageView mEndGameButton;
+
+    @BindView(R.id.player_minus_button)
+    Button mMinusButton;
+
+    @BindView(R.id.player_plus_button)
+    Button mPlusButton;
+
+    @BindView(R.id.territory_offset_view)
+    TextView mOffsetView;
+
+    @BindView(R.id.map_name_text_view)
+    TextView mMapNameTextView;
 
     /* PLAYER */
 
@@ -64,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        mEndGameButton.setEnabled(false);
 
         mPresenter = new MainPresenter();
         mPresenter.attachView(this);
@@ -101,6 +124,51 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         mPresenter.onPlusClick();
     }
 
+    @OnClick(R.id.start_game_button)
+    public void onGameStartClick() {
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle(R.string.Start_game_qm)
+                .setMessage(R.string.Start_game_caution)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int wich) {
+                        startGame();
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    private void startGame() {
+        mStartGameButton.setEnabled(false);
+        mEndGameButton.setEnabled(true);
+        mMinusButton.setEnabled(false);
+        mPlusButton.setEnabled(false);
+        mPlayerAdapter.gameHasStarted(true);
+        mOffsetView.setVisibility(View.GONE);
+        mMapNameTextView.setVisibility(View.VISIBLE);
+    }
+
+    @OnClick(R.id.end_game_button)
+    public void onGameEndClick() {
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle(R.string.Game_over_qm)
+                .setMessage(R.string.Game_over_caution)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int wich) {
+                        endGame();
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    private void endGame() {
+        mEndGameButton.setEnabled(false);
+        // TODO end game calculations
+    }
+
     @Override
     public Context getContext() {
         return this;
@@ -132,6 +200,11 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     }
 
     @Override
+    public void updateMapName(String mapName) {
+        mMapNameTextView.setText(String.format(getString(R.string.The_map_is_), mapName));
+    }
+
+    @Override
     public void setNumberOfPlayers(int numberOfPlayers) {
         mNbOfPlayersTextView.setText("" + numberOfPlayers);
     }
@@ -148,11 +221,6 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         super.onResume();
         mTerritoryController = new TerritoryController();
         EventBus.getDefault().register(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onPlayerClickEvent(PlayerClickEvent event) {
-        // TODO player clicked => change all his territories color *optional*
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

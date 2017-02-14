@@ -44,6 +44,7 @@ class MainPresenter implements IMainPresenter {
 
     private Map mWesterosMap;
     private Map mEssosMap;
+    private String mCurrentMapName;
 
     private List<Region> mListOfRegions;
     private List<ListItem> mListOfRegionsAndTerritories;
@@ -158,6 +159,7 @@ class MainPresenter implements IMainPresenter {
             public void onCompleted() {
                 if (mIsOK) {
                     mView.updateListOfRegionAndTerritories(mListOfRegionsAndTerritories);
+                    mView.updateMapName(mCurrentMapName);
                 }
             }
 
@@ -230,15 +232,18 @@ class MainPresenter implements IMainPresenter {
             case MAP_ESSOS:
                 mListOfRegions.clear();
                 mListOfRegions.addAll(mEssosMap.getRegions());
+                mCurrentMapName = mEssosMap.getName();
                 break;
             case MAP_WESTEROS:
                 mListOfRegions.clear();
                 mListOfRegions.addAll(mWesterosMap.getRegions());
+                mCurrentMapName = mWesterosMap.getName();
                 break;
             case MAP_ESSOS_AND_WESTEROS:
                 mListOfRegions.clear();
                 mListOfRegions.addAll(mWesterosMap.getRegions());
                 mListOfRegions.addAll(mEssosMap.getRegions());
+                mCurrentMapName = mWesterosMap.getName() + " + " + mEssosMap.getName();
                 break;
         }
         RegionModel.getInstance().setRegions(mListOfRegions);

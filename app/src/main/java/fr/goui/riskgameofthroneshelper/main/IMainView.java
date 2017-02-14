@@ -12,5 +12,7 @@ interface IMainView extends IView {
 
     void updateListOfRegionAndTerritories(List<ListItem> listOfRegionsAndTerritories);
 
+    void updateMapName(String mapName);
+
     void setNumberOfPlayers(int numberOfPlayers);
 }

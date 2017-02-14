@@ -3,7 +3,6 @@ package fr.goui.riskgameofthroneshelper.adapter;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,6 @@ import android.widget.TextView;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,10 +24,10 @@ import fr.goui.riskgameofthroneshelper.model.Territory;
 /**
  *
  */
-public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Observer {
+public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final int TYPE_REGION = 1;
-    public static final int TYPE_TERRITORY = 2;
+    private static final int TYPE_TERRITORY = 2;
 
     private Context mContext;
 
@@ -38,13 +35,10 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private List<ListItem> mItems;
 
-    private PlayerModel mPlayerModel = PlayerModel.getInstance();
-
     public TerritoryAdapter(Context context, List<ListItem> items) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
         mItems = items;
-        mPlayerModel.addObserver(this);
     }
 
     @Override
@@ -75,7 +69,6 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 final TerritoryViewHolder tvh = (TerritoryViewHolder) holder;
                 tvh.territoryNameTextView.setText(territory.getName());
                 if (territory.getColorIndex() > -1) {
-                    Log.i("TAGGG - adapter", "changing color to " + territory.getColorIndex());
                     tvh.territoryNameTextView.setBackgroundColor(getColor(territory.getColorIndex()));
                 } else {
                     tvh.territoryNameTextView.setBackgroundResource(android.R.color.transparent);
@@ -85,7 +78,6 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     public void onClick(View view) {
                         int oldColorIndex = territory.getColorIndex();
                         int newColorIndex = pickNextColorIndex(territory);
-                        Log.i("TAGGG", "old: " + oldColorIndex + ", new: " + newColorIndex);
                         EventBus.getDefault().post(new TerritoryClickEvent(territory, tvh.getAdapterPosition(), oldColorIndex, newColorIndex));
                     }
                 });
@@ -106,15 +98,8 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             if (colorIndex > 6) {
                 colorIndex = 0;
             }
-        } while (!mPlayerModel.getPickedColors().contains(colorIndex));
+        } while (!PlayerModel.getInstance().getPickedColors().contains(colorIndex));
         return colorIndex;
-    }
-
-    @Override
-    public void update(Observable observable, Object o) {
-        if (observable instanceof PlayerModel) {
-            // TODO reset colors *optional*
-        }
     }
 
     /**
@@ -144,18 +129,12 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    @Override
-    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
-        mPlayerModel.deleteObserver(this);
-        super.onDetachedFromRecyclerView(recyclerView);
-    }
-
     static class TerritoryViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.territory_name_text_view)
         TextView territoryNameTextView;
 
-        public TerritoryViewHolder(View itemView) {
+        TerritoryViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -166,7 +145,7 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         @BindView(R.id.region_name_text_view)
         TextView regionNameTextView;
 
-        public RegionViewHolder(View itemView) {
+        RegionViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

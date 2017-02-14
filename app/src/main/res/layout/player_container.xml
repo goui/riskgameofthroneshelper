@@ -41,6 +41,11 @@
             android:text="+" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
+
     <ProgressBar
         android:id="@+id/player_progress_bar"
         android:layout_width="wrap_content"

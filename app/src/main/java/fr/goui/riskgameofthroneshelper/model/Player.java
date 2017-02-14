@@ -46,6 +46,6 @@ public class Player {
     }
 
     private void updateTroops() {
-        troops = Math.max(territoriesPoints / MIN_TROOPS + regionBonus, MIN_TROOPS);
+        troops = Math.max(territoriesPoints / MIN_TROOPS, MIN_TROOPS) + regionBonus;
     }
 }
