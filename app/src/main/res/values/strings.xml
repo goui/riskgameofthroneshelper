@@ -10,4 +10,5 @@
     <string name="Game_over_caution">Points will be calculated and the winner will be announced</string>
     <string name="Waiting_for_the_game_to_start">Please choose the number of players and their color.\nWaiting for the game to start...</string>
     <string name="The_map_is_">The map is %1$s</string>
+    <string name="Congratulations_to_the_winning_player">Congratulations to the winning player!!!</string>
 </resources>

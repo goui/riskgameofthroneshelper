@@ -105,4 +105,13 @@ public class PlayerModel extends Observable {
         }
         return player;
     }
+
+    /**
+     * Resets the players points.
+     */
+    public void resetPlayers() {
+        for (Player player : players) {
+            player.setTerritoriesPoints(0);
+        }
+    }
 }

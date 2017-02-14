@@ -21,6 +21,10 @@ public class RegionModel {
         return instance;
     }
 
+    public List<Region> getRegions() {
+        return regions;
+    }
+
     public Region getRegionByIndex(int index) {
         return regions.get(index);
     }

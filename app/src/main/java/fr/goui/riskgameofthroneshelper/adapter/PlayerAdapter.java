@@ -36,6 +36,8 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
 
     private boolean mHasGameStarted;
 
+    private boolean mHasGameEnded;
+
     public PlayerAdapter(Context context) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
@@ -52,7 +54,11 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
     public void onBindViewHolder(final PlayerViewHolder holder, int position) {
         final Player player = mListOfPlayers.get(position);
         if (player != null) {
-            holder.mPlayerTroopsTextView.setText("" + player.getTroops());
+            if (mHasGameEnded) {
+                holder.mPlayerTroopsTextView.setText("" + player.getTerritoriesPoints());
+            } else {
+                holder.mPlayerTroopsTextView.setText("" + player.getTroops());
+            }
             holder.mPlayerTroopsTextView.setBackgroundColor(getColor(player.getColorIndex()));
             if (mHasGameStarted) {
                 holder.itemView.setOnClickListener(null);
@@ -93,6 +99,11 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
 
     public void gameHasStarted(boolean hasGameStarted) {
         mHasGameStarted = hasGameStarted;
+        notifyDataSetChanged();
+    }
+
+    public void endGame() {
+        mHasGameEnded = true;
         notifyDataSetChanged();
     }
 

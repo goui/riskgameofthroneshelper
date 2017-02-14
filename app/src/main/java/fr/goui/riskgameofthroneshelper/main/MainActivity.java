@@ -166,7 +166,10 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     private void endGame() {
         mEndGameButton.setEnabled(false);
-        // TODO end game calculations
+        mTerritoryController.endGame();
+        mPlayerAdapter.endGame();
+        mOffsetView.setText(getString(R.string.Congratulations_to_the_winning_player));
+        mOffsetView.setVisibility(View.VISIBLE);
     }
 
     @Override

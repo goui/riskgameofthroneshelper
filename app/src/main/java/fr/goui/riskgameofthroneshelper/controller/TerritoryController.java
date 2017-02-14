@@ -1,7 +1,5 @@
 package fr.goui.riskgameofthroneshelper.controller;
 
-import android.util.Log;
-
 import fr.goui.riskgameofthroneshelper.event.TerritoryClickEvent;
 import fr.goui.riskgameofthroneshelper.model.Player;
 import fr.goui.riskgameofthroneshelper.model.PlayerModel;
@@ -42,7 +40,6 @@ public class TerritoryController {
         Region region = mRegionModel.getRegionByIndex(territory.getRegionIndex());
 
         boolean wasRegionControlledByOldPlayer = isRegionControlled(region);
-        Log.i("TAGGG - controller", "changing color from " + oldColorIndex + " to " + newColorIndex);
         territory.setColorIndex(newColorIndex);
         boolean isRegionControlledByNewPlayer = isRegionControlled(region);
 
@@ -70,5 +67,16 @@ public class TerritoryController {
         }
 
         return regionHasChanged;
+    }
+
+    public void endGame() {
+        PlayerModel playerModel = PlayerModel.getInstance();
+        playerModel.resetPlayers();
+        for (Region region : mRegionModel.getRegions()) {
+            for (Territory territory : region.getTerritories()) {
+                Player player = playerModel.findPlayerByColorIndex(territory.getColorIndex());
+                player.setTerritoriesPoints(player.getTerritoriesPoints() + territory.getEndingTroopsCount());
+            }
+        }
     }
 }
