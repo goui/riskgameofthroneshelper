@@ -89,6 +89,11 @@
           "port": 1
         },
         {
+          "name": "Karhold",
+          "castle": 0,
+          "port": 0
+        },
+        {
           "name": "Skagos",
           "castle": 0,
           "port": 0
