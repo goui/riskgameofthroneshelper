@@ -75,7 +75,9 @@ public class TerritoryController {
         for (Region region : mRegionModel.getRegions()) {
             for (Territory territory : region.getTerritories()) {
                 Player player = playerModel.findPlayerByColorIndex(territory.getColorIndex());
-                player.setTerritoriesPoints(player.getTerritoriesPoints() + territory.getEndingTroopsCount());
+                if (player != null) {
+                    player.setTerritoriesPoints(player.getTerritoriesPoints() + territory.getEndingTroopsCount());
+                }
             }
         }
     }

@@ -29,6 +29,8 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public static final int TYPE_REGION = 1;
     private static final int TYPE_TERRITORY = 2;
 
+    private static final int INVALID = -1;
+
     private Context mContext;
 
     private LayoutInflater mLayoutInflater;
@@ -79,6 +81,15 @@ public class TerritoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         int oldColorIndex = territory.getColorIndex();
                         int newColorIndex = pickNextColorIndex(territory);
                         EventBus.getDefault().post(new TerritoryClickEvent(territory, tvh.getAdapterPosition(), oldColorIndex, newColorIndex));
+                    }
+                });
+                tvh.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        int oldColorIndex = territory.getColorIndex();
+                        tvh.territoryNameTextView.setBackgroundResource(android.R.color.transparent);
+                        EventBus.getDefault().post(new TerritoryClickEvent(territory, tvh.getAdapterPosition(), oldColorIndex, INVALID));
+                        return true;
                     }
                 });
             }
